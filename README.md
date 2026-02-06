@@ -16,4 +16,12 @@ Beberapa praktik *Secure Coding* yang saya implementasikan antara lain:
 
 ### Self-Correction & Future Improvements
 * **User-Friendly Error Handling**: Saat ini, jika terjadi kesalahan seperti ID tidak ditemukan, sistem melempar `IllegalArgumentException` yang memunculkan halaman error bawaan Java. Kedepannya, saya perlu mengalihkan user ke halaman error yang lebih *User-Friendly*.
-* **Input Validation**: Kedepannya, Saya perlu menambahkan validasi input pada model (seperti jumlah product tidak boleh negatif).
+* **Input Validation**: Kedepannya, Saya perlu menambahkan validasi input pada model (seperti jumlah product tidak boleh negatif). [update : saya sudah menambahkan validasi input di bagian model. Namun, untuk bagian UI, handling error yang akan ditampilkan ke user belum diimplementasikan.]
+
+# Reflection 2
+
+Membuat unit test membuat saya merasa aman karena setiap komponen kode saya dapat divalidasi secara independen dan cepat. Terkait kuantitas, sebuah class idealnya memiliki test yang seharusnya mencakup seluruh kemungkinan jalur logic bisnis, termasuk *edge cases*. Untuk memastikan hal tersebut, saya kedepannya dapat menggunakan *code coverage* agar dapat mengidentifikasi bagian *source code* mana yang belum dieksekusi. Namun, *coverage* 100% bukan jaminan kode bebas dari bug. *Coverage* hanya mengukur aspek kuantitas eksekusi baris kode, namun tidak menjamin kebenaran logic bisnis untuk segala variasi input di lingkungan *real-time*.
+
+Mengenai pembuatan *functional test suite* baru untuk memverifikasi jumlah item, melakukan *copy-paste* prosedur *setup* dari test sebelumnya merupakan praktik yang buruk bagi kualitas kode. Masalah *clean code* utama yang muncul adalah pengulangan kode atau pelanggaran prinsip **DRY (Don't Repeat Yourself)**. Hal ini menyebabkan kode menjadi *rigid* dan sulit di-develop kedepannya karena setiap perubahan infrastruktur, seperti konfigurasi URL atau logic sinkronisasi halaman, harus diubah secara manual di setiap class test.
+
+Untuk memperbaiki masalah tersebut, saya menerapkan prinsip **Inheritance** dengan mengekstraksi logika umum ke dalam sebuah `BaseProductFunctionalTest`. Dengan memindahkan *instance variable* serta *helper methods* ke dalam class induk, class test spesifik hanya perlu melakukan *extends*. Pendekatan ini juga memastikan setiap test suite tetap fokus pada tanggung jawab fungsionalnya saja (*Single Responsibility Principle*), meningkatkan keterbacaan kode, dan memudahkan skalabilitas testing di masa mendatang tanpa menimbulkan *redundance*.
