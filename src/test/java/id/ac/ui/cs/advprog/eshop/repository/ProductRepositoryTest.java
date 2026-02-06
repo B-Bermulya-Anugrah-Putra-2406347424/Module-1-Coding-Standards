@@ -67,4 +67,26 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
+    @Test
+    void testCreateProductWithNegativeQuantity() {
+        Product product = new Product();
+        product.setProductName("Mangga Hitam");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            product.setProductQuantity(-5);
+        });
+    }
+
+    @Test
+    void testUpdateProductWithNegativeQuantity() {
+        Product product = new Product();
+        product.setProductName("Mangga Hitam");
+        product.setProductQuantity(10);
+        productRepository.create(product);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            product.setProductQuantity(-1);
+        });
+    }
 }
