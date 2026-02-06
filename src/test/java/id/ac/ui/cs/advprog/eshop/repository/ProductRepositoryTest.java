@@ -89,4 +89,64 @@ class ProductRepositoryTest {
             product.setProductQuantity(-1);
         });
     }
+
+    @Test
+    void testUpdateSuccess() {
+        Product product = new Product();
+        product.setProductName("Mangga Hitam");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId(product.getProductId());
+        updatedProduct.setProductName("Mangga Putih");
+        updatedProduct.setProductQuantity(50);
+
+        productRepository.update(updatedProduct);
+
+        Product result = productRepository.findById(product.getProductId());
+        assertEquals("Mangga Putih", result.getProductName());
+        assertEquals(50, result.getProductQuantity());
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("id salah ngawur super");
+        updatedProduct.setProductName("none");
+
+        Product result = productRepository.update(updatedProduct);
+        assertNull(result);
+    }
+
+    @Test
+    void testDeleteSuccess() {
+        Product product = new Product();
+        product.setProductName("Mangga Hitam");
+        product.setProductQuantity(10);
+        productRepository.create(product);
+
+        productRepository.delete(product.getProductId());
+
+        Iterator<Product> productIterator = productRepository.findAll();
+        assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testFindByIdSuccess() {
+        Product product = new Product();
+        product.setProductName("Mangga Hitam");
+        productRepository.create(product);
+
+        Product found = productRepository.findById(product.getProductId());
+        assertNotNull(found);
+        assertEquals(product.getProductName(), found.getProductName());
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            productRepository.findById("id ngasal");
+        });
+    }
 }
