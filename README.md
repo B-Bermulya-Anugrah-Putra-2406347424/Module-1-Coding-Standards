@@ -30,6 +30,7 @@ Untuk memperbaiki masalah tersebut, saya menerapkan prinsip **Inheritance** deng
 
 ## Project Links
 - **Deployed Application (Koyeb):** [link](https://handicapped-crissy-mug-playground-bae751cb.koyeb.app/)
+- **Deployed Application (Railway [updated since Koyeb trial expired])** [link](https://module-1-coding-standards-production.up.railway.app)
 - **SonarCloud Project:** [Code Quality Analysis](https://sonarcloud.io/project/overview?id=B-Bermulya-Anugrah-Putra-2406347424_Module-1-Coding-Standards)
 
 ### Code Quality Issue(s) & Fixing Strategy
